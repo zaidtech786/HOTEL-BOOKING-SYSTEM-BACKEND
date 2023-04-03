@@ -17,10 +17,13 @@ const userModel = require("./Models/userModel");
 
 // Getting Routes
 const user = require("./Routes/userRoute")
+app.use("/api",user);
+
 app.use("/hotel",require("./Routes/HotelRoute"))
 const rooms = require("./Routes/RoomRoute")
-app.use("/api",user)
-app.use("/room",rooms)
+app.use("/room",rooms);
+
+app.use("/booked",require("./Routes/BookedRoute"))
 
 
 

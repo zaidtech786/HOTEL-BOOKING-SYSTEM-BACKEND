@@ -31,7 +31,7 @@ const AddHotel = async(req,res) => {
 const getAllHotels = async(req,res) => {
     let hotels;
     try {
-         hotels = await HotelModal.find({})
+         hotels = await HotelModal.find({}).populate("rooms")
     } catch (error) {
         console.log(error)
     }
@@ -46,7 +46,7 @@ const getHotelById = async(req,res) => {
     const {id}= req.params
     let hotels;
     try {
-         hotels = await HotelModal.findById(id)
+         hotels = await HotelModal.findById(id).populate("rooms")
     } catch (error) {
         console.log(error)
     }
@@ -61,32 +61,47 @@ const removeHotel = async(req,res) => {
     const {id} = req.params
     let hotel;
     try {
-        hotel = await HotelModal.findByIdAndRemove(id)    
+        hotel = await HotelModal.findByIdAndRemove(id).exec()    
     } catch (error) {
         console.log(error)
     }
     if(hotel){
-        return res.send({message:"Hotel Deleted Successfully"})
+        return res.send({message:"Hotel Deleted Successfully",hotel})
     }
     return res.send({message:"Unable to delete the hotel"})
 }
 
 // Edit Hotel
-// const EditHotel = async(req,res) => {
-//     const {id} = req.params;
-//     let hotel;
-//     try {
-//         hotel = await hotelModel.findByIdAndUpdate(id,{
-//             req.body
-//         })
-//     } catch (error) {
-//         console.log(error)
-        
-//     }
-// }
+const EditHotel = async(req,res) => {
+    const {id} = req.params;
+    let hotel;
+    try {
+        hotel = await hotelModel.findByIdAndUpdate(id,{
+            $set:req.body
+        },{
+            new:true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+    res.send({msg:"Hotel Updated Successfully",hotel})
+}
 
+// Find By Type
+const FindByType = async(req,res) => {
+const {city} = req.params;
+let data;
+try {
+    data = await hotelModel.find({city:city})
+} catch (error) {
+    console.log(error) 
+}
+res.send({data})
+}
 
 exports.AddHotel = AddHotel
 exports.removeHotel = removeHotel
 exports.getAllHotels = getAllHotels
 exports.getHotelById = getHotelById
+exports.EditHotel = EditHotel
+exports.FindByType = FindByType

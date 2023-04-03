@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 const roomSchema = new mongoose.Schema({
     title:{
         type:String,
-        required:true
+        required:true 
     },
     price:{
-        type:String,
+        type:Number,
         required:true
     },
     maxPeople:{
@@ -15,6 +15,7 @@ const roomSchema = new mongoose.Schema({
     },
     hotelName:{
      type:mongoose.Schema.ObjectId,
+     ref:"Hotel"
     },
     desc:{
         type:String,
@@ -23,6 +24,11 @@ const roomSchema = new mongoose.Schema({
     roomNumbers:{
         type:[Number],
     },
+    isBooked:{
+        type:Boolean,
+        default:false
+    },
+   
 },{
     timestamps:true
 });
