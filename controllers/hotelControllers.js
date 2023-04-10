@@ -1,4 +1,4 @@
-const hotelModel = require("../Models/hotelModel");
+// const hotelModel = require("../Models/hotelModel");
 const HotelModal = require("../Models/hotelModel");
 
 
@@ -61,7 +61,7 @@ const removeHotel = async(req,res) => {
     const {id} = req.params
     let hotel;
     try {
-        hotel = await HotelModal.findByIdAndRemove(id).exec()    
+        hotel = await HotelModal.findByIdAndRemove(id)    
     } catch (error) {
         console.log(error)
     }
@@ -76,7 +76,7 @@ const EditHotel = async(req,res) => {
     const {id} = req.params;
     let hotel;
     try {
-        hotel = await hotelModel.findByIdAndUpdate(id,{
+        hotel = await HotelModal.findByIdAndUpdate(id,{
             $set:req.body
         },{
             new:true
@@ -92,7 +92,7 @@ const FindByType = async(req,res) => {
 const {city} = req.params;
 let data;
 try {
-    data = await hotelModel.find({city:city})
+    data = await HotelModal.find({city:city})
 } catch (error) {
     console.log(error) 
 }

@@ -5,10 +5,6 @@ const roomSchema = new mongoose.Schema({
         type:String,
         required:true 
     },
-    price:{
-        type:Number,
-        required:true
-    },
     maxPeople:{
         type:Number,
         required:true
@@ -20,9 +16,6 @@ const roomSchema = new mongoose.Schema({
     desc:{
         type:String,
         required:true
-    },
-    roomNumbers:{
-        type:[Number],
     },
     isBooked:{
         type:Boolean,

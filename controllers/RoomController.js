@@ -3,14 +3,12 @@ const hotelModel = require("../Models/hotelModel");
 
 
 const AddRooms = async(req,res) => {
-    const {title,price,maxPeople,desc,roomNumbers} = req.body
+    const {title,maxPeople,desc} = req.body
     const {id} = req.params;
   const room = new RoomModel({
     title,
-    price,
     maxPeople,
     desc,
-    roomNumbers,
     hotelName:id
   });
   let hotel;
@@ -25,7 +23,7 @@ const AddRooms = async(req,res) => {
   } catch (error) {
     console.log(error)
   }
-  res.send({room})
+  res.send({room,hotel})
 }
 
 // getAll the the Rooms
