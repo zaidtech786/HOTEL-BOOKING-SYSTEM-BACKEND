@@ -50,19 +50,27 @@ const getRoomById = async(req,res) => {
 }
 
 // cancel booked Rooms by Id
-const removeRoomById = async(req,res) => {
-    const {id} = req.params
-    let Rooms;
+const removeRoomById = async (req, res) => {
+    const { id,roomId } = req.params;
+    let updatedRoom;
+
     try {
-        Rooms = await bookRoomModel.findByIdAndRemove(id).exec()    
+        // First, update the room to mark it as not booked
+        updatedRoom = await RoomModel.findByIdAndUpdate(roomId, { isBooked: false }, { new: true }).exec();
+        
+        // Then, if the room was successfully updated, delete it
+        if (updatedRoom) {
+            await bookRoomModel.findByIdAndDelete(id).exec();
+            return res.send({ message: "Room deleted successfully" });
+        } else {
+            return res.send({ message: "Room not found or unable to update" });
+        }
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        return res.status(500).send({ message: "Internal Server Error" });
     }
-    if(Rooms){
-        return res.send({message:"Rooms Deleted Successfully"})
-    }
-    return res.send({message:"Unable to delete the Rooms"})
 }
+
 
 // Update booked Rooms By Id
 const updateRoom = async(req,res) => {

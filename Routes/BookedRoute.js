@@ -5,7 +5,7 @@ const {bookedRooms,getAllBookedRooms,getRoomById,removeRoomById,updateRoom,getUs
 router.post("/bookedroom",bookedRooms);
 router.get("/getallbookedrooms",getAllBookedRooms);
 router.get("/getbyid/:id",getRoomById);
-router.delete("/removeroom/:id",removeRoomById);
+router.delete("/removeroom/:id/:roomId",removeRoomById);
 router.put("/updateroom/:id",updateRoom);
 router.get("/getuserbookedroom/:id",getUserRoom);
 router.put("/checkout/:id",checkOutUser);
